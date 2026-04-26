@@ -11,16 +11,16 @@ export function Projects() {
   return (
     <motion.section
       id="projects"
-      className="py-24 px-6 max-w-5xl mx-auto"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.4 }}
+      className="py-24 px-6 max-w-6xl mx-auto"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6 }}
     >
       <SectionHeader
         label="03 — PROJECTS"
         title="Things I've Shipped"
-        subtitle="Real projects. Real impact."
+        subtitle="Real projects, real AI, real impact."
       />
 
       <motion.div
@@ -28,7 +28,7 @@ export function Projects() {
         variants={staggerContainer}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12"
       >
         {portfolioData.projects.map((project, index) => (
           <motion.div key={project.id} variants={scaleIn} custom={index}>

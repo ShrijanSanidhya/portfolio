@@ -1,73 +1,67 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, ExternalLink } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 
-const bannerStyles = {
-  kavach: { bg: "linear-gradient(135deg, #0f172a, #1e293b)", accent: "#3b82f6" },
-  voiceiq: { bg: "linear-gradient(135deg, #0c1524, #162032)", accent: "#64748b" },
-  fitai: { bg: "linear-gradient(135deg, #0a1a0f, #132218)", accent: "#475569" },
-};
-
-export function ProjectCard({
-  id,
-  title,
-  description,
-  stack,
-  github,
-  demo,
-  date,
-  icon: Icon,
-}) {
+export function ProjectCard({ title, description, stack, github, demo, date, tag, icon: Icon, image }) {
   const [isHovered, setIsHovered] = useState(false);
-  const style = bannerStyles[id] || bannerStyles.kavach;
 
   return (
     <motion.div
-      whileHover={{ y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
+      whileHover={{ y: -6, transition: { duration: 0.3 } }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="bg-card rounded-xl overflow-hidden flex flex-col h-full transition-all duration-200"
+      className="glass rounded-card overflow-hidden flex flex-col h-full transition-all duration-300 group"
       style={{
-        borderWidth: "1px",
-        borderStyle: "solid",
-        borderColor: isHovered ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.06)",
-        backgroundColor: isHovered ? "#161f2e" : "#111827",
+        borderColor: isHovered ? 'rgba(168,85,247,0.35)' : 'rgba(255,255,255,0.06)',
+        boxShadow: isHovered ? '0 20px 60px rgba(168,85,247,0.12)' : '0 8px 25px rgba(0,0,0,0.15)'
       }}
     >
       {/* Banner */}
-      <div
-        className="h-32 relative overflow-hidden flex items-center justify-center"
-        style={{ background: style.bg }}
-      >
-        {/* Top accent strip */}
-        <div
-          className="absolute top-0 left-0 w-full h-[2px]"
-          style={{ backgroundColor: style.accent }}
-        />
+      <div className="h-48 relative overflow-hidden flex items-center justify-center border-b border-white/5">
+        {image ? (
+          <>
+            <motion.img
+              src={image}
+              alt={`${title} preview`}
+              className="absolute inset-0 w-full h-full object-cover"
+              animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+              transition={{ duration: 0.35 }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-pink/5 to-transparent" />
+            <motion.div
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(168,85,247,0.08), transparent)" }}
+              animate={isHovered ? { x: ["-100%", "200%"] } : {}}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+            />
+            <motion.div
+              animate={isHovered ? { scale: 1.15, rotate: 8 } : { scale: 1, rotate: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Icon size={32} className="text-accent-light relative z-10" />
+            </motion.div>
+          </>
+        )}
 
-        <Icon size={28} className="relative z-10 text-text-secondary" />
-
-        {/* Date */}
-        <span className="absolute top-3 right-3 font-mono text-[9px] text-text-tertiary">
-          {date}
-        </span>
+        <span className="absolute top-3 right-3 font-mono text-[9px] text-white/75 bg-black/45 px-2 py-0.5 rounded-md backdrop-blur-sm">{date}</span>
+        <span className="absolute top-3 left-3 font-mono text-[10px] text-accent-light bg-black/45 px-2.5 py-0.5 rounded-md backdrop-blur-sm">{tag}</span>
       </div>
 
       {/* Body */}
-      <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-display font-semibold text-sm text-text-primary mb-1">
-          {title}
-        </h3>
-        <p className="font-sans text-xs text-text-secondary leading-relaxed mb-4">
-          {description}
-        </p>
+      <div className="p-6 flex flex-col flex-1">
+        <h3 className="font-bold text-lg text-text-primary mb-2 tracking-tight">{title}</h3>
+        <p className="font-sans text-sm text-text-secondary leading-[1.7] mb-5 flex-1">{description}</p>
 
-        {/* Stack pills */}
-        <div className="flex flex-wrap gap-1.5 mt-auto">
+        {/* Stack */}
+        <div className="flex flex-wrap gap-1.5 mb-5">
           {stack.map((tech) => (
             <span
               key={tech}
-              className="font-mono text-[10px] px-2 py-0.5 rounded-md bg-surface border border-border text-text-tertiary"
+              className="font-mono text-[10px] px-2.5 py-1 rounded-md bg-bg-surface border border-border text-text-tertiary hover:text-accent-light hover:border-accent/30 transition-colors duration-200"
             >
               {tech}
             </span>
@@ -75,24 +69,25 @@ export function ProjectCard({
         </div>
 
         {/* Links */}
-        <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border">
+        <div className="flex items-center gap-5 pt-4 border-t border-border">
           <a
             href={github}
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-[10px] text-text-secondary hover:text-text-primary flex items-center gap-1 transition-colors duration-200"
+            className="font-mono text-[11px] text-text-secondary hover:text-accent-light flex items-center gap-1.5 transition-colors"
           >
-            GitHub <span className="text-text-tertiary">→</span>
+            <Github size={14} /> Source Code
           </a>
           {demo !== "#" && (
-            <a
+            <motion.a
               href={demo}
               target="_blank"
               rel="noreferrer"
-              className="font-mono text-[10px] text-accent hover:text-text-primary flex items-center gap-1 transition-colors duration-200"
+              whileHover={{ x: 2 }}
+              className="font-mono text-[11px] text-accent-light hover:text-pink-light flex items-center gap-1.5 transition-colors ml-auto"
             >
-              Demo <span>↗</span>
-            </a>
+              Live Demo <ExternalLink size={12} />
+            </motion.a>
           )}
         </div>
       </div>
