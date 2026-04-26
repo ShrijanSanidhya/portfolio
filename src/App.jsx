@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { Loader } from "./components/ui/Loader";
-import { AuroraBackground } from "./components/ui/AuroraBackground";
+import { CustomCursor } from "./components/ui/CustomCursor";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
 import { Hero } from "./components/sections/Hero";
@@ -25,12 +25,13 @@ function App() {
   }, []);
 
   return (
-    <div className="relative bg-bg min-h-screen overflow-x-hidden">
+    <div className="relative min-h-screen overflow-x-hidden">
+      <CustomCursor />
+      
       <AnimatePresence>
         {showLoader && <Loader />}
       </AnimatePresence>
 
-      <AuroraBackground />
       <Navbar activeSection={activeSection} />
       
       <main className="relative z-10">

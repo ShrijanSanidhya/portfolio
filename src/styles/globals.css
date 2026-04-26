@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,23 +7,42 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    @media (min-width: 768px) {
+      cursor: none;
+    }
   }
   
   body {
-    @apply bg-bg text-white antialiased overflow-x-hidden font-dm;
+    @apply bg-bg text-text-secondary antialiased overflow-x-hidden font-sans;
+    line-height: 1.75;
+  }
+
+  /* Single subtle blue radial gradient */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(ellipse 50% 60% at 85% -10%, rgba(59,130,246,0.06) 0%, transparent 70%);
+  }
+
+  /* Headings rules */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-primary;
+  }
+
+  @media (min-width: 768px) {
+    a, button, [role="button"], input, select, textarea {
+      cursor: none !important;
+    }
   }
 
   ::selection {
-    @apply bg-purple/30 text-purple-light;
-  }
-}
-
-@layer utilities {
-  .glass-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    @apply bg-accent-dim text-accent;
   }
 }
 
@@ -37,25 +56,17 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #7c3aed, #06b6d4);
+  background: #3b82f6;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #a78bfa, #67e8f9);
+  background: #60a5fa;
 }
 
-/* Base aurora animation for backgrounds if needed */
-@keyframes aurora {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(5vw, 10vh) scale(1.1); }
-  66% { transform: translate(-10vw, 5vh) scale(0.9); }
-  100% { transform: translate(0vw, -5vh) scale(1); }
-}
-
-.aurora-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  animation: aurora 20s infinite alternate linear;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { 
+    animation-duration: 0.01ms !important; 
+    transition-duration: 0.01ms !important; 
+  }
 }

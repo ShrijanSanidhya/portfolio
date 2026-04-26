@@ -1,70 +1,85 @@
 import { motion } from "framer-motion";
 import { portfolioData } from "../../data/portfolioData";
-import { useInView } from "../../hooks/useInView";
-import { fadeUp } from "../../lib/motionVariants";
 import { SectionHeader } from "../ui/SectionHeader";
-import { Mail, Phone, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, ExternalLink } from "lucide-react";
 
 export function Contact() {
-  const [ref, isInView] = useInView({ threshold: 0.2 });
   const { contact } = portfolioData;
 
   return (
-    <section id="contact" className="py-24 px-[5%] max-w-[1400px] mx-auto border-t border-glass-border">
-      <div ref={ref} className="flex flex-col md:flex-row gap-12 justify-between">
-        <div className="md:w-1/2">
-          <SectionHeader number="06" title="Let's Build Something" />
-          <motion.p 
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="text-[1.1rem] text-muted mb-10 max-w-[480px]"
-          >
-            I'm currently open for internships and freelance opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-          </motion.p>
+    <motion.section 
+      id="contact" 
+      className="py-24 px-[5%] max-w-xl mx-auto"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.4 }}
+    >
+      <div className="text-center">
+        <SectionHeader 
+          label="06 — CONTACT" 
+          title="Let's Build Something" 
+        />
+      </div>
+
+      {/* Card */}
+      <div className="bg-card border border-border rounded-[12px] p-8 mt-12">
           
-          <motion.div 
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="flex flex-col gap-6"
+        {/* Contact Pills */}
+        <div className="flex flex-col gap-3">
+          <motion.a 
+            href={`mailto:${contact.email}`}
+            whileHover={{ x: 4 }}
+            className="bg-surface border border-border rounded-[12px] p-4 flex items-center gap-4 cursor-pointer hover:border-border-hover transition-colors duration-200"
           >
-            <a href={`mailto:${contact.email}`} className="flex items-center gap-4 group">
-              <div className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-cyan group-hover:bg-cyan/10 transition-colors">
-                <Mail size={20} />
-              </div>
-              <span className="font-dm text-white group-hover:text-cyan transition-colors">{contact.email}</span>
-            </a>
-            <a href={`tel:${contact.phone}`} className="flex items-center gap-4 group">
-              <div className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-purple group-hover:bg-purple/10 transition-colors">
-                <Phone size={20} />
-              </div>
-              <span className="font-dm text-white group-hover:text-purple transition-colors">{contact.phone}</span>
-            </a>
-          </motion.div>
+            <div className="w-10 h-10 rounded-md flex items-center justify-center bg-accent-dim text-accent shrink-0">
+              <Mail size={18} />
+            </div>
+            <span className="font-mono text-sm text-text-secondary truncate">
+              {contact.email}
+            </span>
+          </motion.a>
+
+          <motion.a 
+            href={`tel:${contact.phone}`}
+            whileHover={{ x: 4 }}
+            className="bg-surface border border-border rounded-[12px] p-4 flex items-center gap-4 cursor-pointer hover:border-border-hover transition-colors duration-200"
+          >
+            <div className="w-10 h-10 rounded-md flex items-center justify-center bg-accent-dim text-accent shrink-0">
+              <Phone size={18} />
+            </div>
+            <span className="font-mono text-sm text-text-secondary">
+              {contact.phone}
+            </span>
+          </motion.a>
         </div>
 
-        <motion.div 
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="md:w-1/3 flex flex-col gap-4 justify-end"
-        >
-          <span className="font-mono text-[0.7rem] text-muted uppercase tracking-widest mb-2">Socials</span>
+        {/* Divider */}
+        <div className="flex items-center gap-4 my-6">
+          <div className="flex-1 border-t border-border" />
+          <span className="font-mono text-[10px] text-text-tertiary uppercase tracking-widest">or find me on</span>
+          <div className="flex-1 border-t border-border" />
+        </div>
+
+        {/* Social Pills */}
+        <div className="flex justify-center flex-wrap gap-3">
           {contact.socials.map((social) => (
-            <a 
+            <motion.a 
               key={social.name}
               href={social.url}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-between p-4 rounded-xl glass-card hover:bg-white/5 transition-colors group"
+              whileHover={{ y: -2, borderColor: 'rgba(59,130,246,0.3)' }} 
+              whileTap={{ scale: 0.95 }}
+              className="bg-surface border border-border rounded-pill px-5 py-2.5 font-mono text-[11px] text-text-secondary flex items-center gap-2 hover:text-text-primary transition-colors duration-200"
             >
-              <span className="font-syne font-bold text-white">{social.name}</span>
-              <ArrowUpRight size={20} className="text-muted group-hover:text-white transition-colors" />
-            </a>
+              {social.name}
+              <ExternalLink size={11} className="text-text-tertiary" />
+            </motion.a>
           ))}
-        </motion.div>
+        </div>
+
       </div>
-    </section>
+    </motion.section>
   );
 }

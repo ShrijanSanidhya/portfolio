@@ -32,15 +32,15 @@ export function Navbar({ activeSection }) {
         className={cn(
           "fixed top-0 w-full z-50 transition-all duration-300",
           scrolled 
-            ? "backdrop-blur-2xl bg-bg/80 border-b border-white/[0.06] py-4" 
+            ? "backdrop-blur-sm bg-bg/90 border-b border-border py-4" 
             : "bg-transparent border-transparent py-6"
         )}
       >
-        <div className="max-w-[1400px] mx-auto px-[5%] flex justify-between items-center">
+        <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
           <motion.a
             href="#"
             whileHover={{ scale: 1.05 }}
-            className="font-syne font-black text-xl bg-gradient-to-r from-purple to-cyan bg-clip-text text-transparent"
+            className="font-display font-semibold text-xl text-text-primary"
           >
             SS
           </motion.a>
@@ -51,36 +51,24 @@ export function Navbar({ activeSection }) {
               {navLinks.map((link) => {
                 const isActive = activeSection === link.name.toLowerCase() || activeSection === link.href.replace('#', '');
                 return (
-                  <li key={link.name} className="relative">
+                  <li key={link.name}>
                     <a
                       href={link.href}
                       className={cn(
-                        "font-mono text-xs uppercase tracking-widest transition-colors duration-200 py-2 inline-block",
-                        isActive ? "text-cyan" : "text-white/50 hover:text-white"
+                        "font-mono text-[11px] uppercase tracking-widest transition-colors duration-200 py-2 inline-block",
+                        isActive ? "text-accent" : "text-text-tertiary hover:text-text-primary"
                       )}
                     >
                       {link.name}
                     </a>
-                    {isActive && (
-                      <motion.span
-                        layoutId="activeNav"
-                        className="absolute -bottom-1 left-0 w-full h-[2px] bg-cyan"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                      />
-                    )}
                   </li>
                 );
               })}
             </ul>
 
             {/* Availability Pill (Desktop Only) */}
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-pill bg-purple/10 border border-purple/30">
-              <motion.span
-                animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-1.5 h-1.5 rounded-full bg-green-400"
-              />
-              <span className="text-purple-light font-mono text-[10px] uppercase tracking-wider">
+            <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-md border border-accent/30">
+              <span className="text-accent font-mono text-[10px] uppercase tracking-wider">
                 Available for Internships
               </span>
             </div>
@@ -88,7 +76,7 @@ export function Navbar({ activeSection }) {
 
           {/* Mobile Hamburger */}
           <button 
-            className="md:hidden text-white p-2"
+            className="md:hidden text-text-primary p-2 cursor-hover"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -104,7 +92,7 @@ export function Navbar({ activeSection }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-bg/95 backdrop-blur-xl flex flex-col items-center justify-center md:hidden"
+            className="fixed inset-0 z-40 bg-bg/95 backdrop-blur-md flex flex-col items-center justify-center md:hidden"
           >
             <ul className="flex flex-col gap-8 text-center list-none m-0 p-0">
               {navLinks.map((link, i) => (
@@ -117,7 +105,7 @@ export function Navbar({ activeSection }) {
                   <a
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="font-syne text-3xl font-bold text-white hover:text-cyan transition-colors"
+                    className="font-display text-3xl font-semibold text-text-primary hover:text-accent transition-colors"
                   >
                     {link.name}
                   </a>

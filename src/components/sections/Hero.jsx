@@ -1,172 +1,127 @@
 import { motion } from "framer-motion";
 import { portfolioData } from "../../data/portfolioData";
 import { useTypewriter } from "../../hooks/useTypewriter";
-import { fadeUp, staggerContainer, fadeIn } from "../../lib/motionVariants";
-import { ArrowDownRight, ExternalLink, ChevronDown } from "lucide-react";
+import { fadeUp, staggerContainer, scaleIn } from "../../lib/motionVariants";
 
 export function Hero() {
-  const { personal } = portfolioData;
-  const { displayText } = useTypewriter(personal.taglines);
-
-  const floatingPills = [
-    { text: "React", top: "-10%", left: "0%", delay: 0, duration: 3 },
-    { text: "GenAI", top: "15%", right: "-15%", delay: 0.5, duration: 3.5 },
-    { text: "Python", bottom: "10%", left: "-10%", delay: 1, duration: 4 },
-    { text: "Node.js", bottom: "-5%", right: "10%", delay: 1.5, duration: 4.5 }
-  ];
+  const { titles, description } = portfolioData.hero;
+  const currentTitle = useTypewriter(titles, 100, 2000);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center relative overflow-hidden pt-20 px-[5%] max-w-[1400px] mx-auto">
-      <div className="w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-0">
-        
-        {/* Left Column - 55% on lg */}
-        <motion.div 
-          className="w-full lg:w-[55%] flex flex-col items-start z-10"
+    <section id="hero" className="min-h-screen flex flex-col justify-center max-w-5xl mx-auto px-6 pt-24 pb-16 relative">
+      <div className="flex flex-col-reverse lg:flex-row w-full gap-16 lg:gap-8 items-center">
+
+        {/* LEFT — Content */}
+        <motion.div
+          className="w-full lg:w-1/2"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* Availability Badge */}
-          <motion.div 
-            variants={fadeUp} 
-            custom={0}
-            className="inline-flex items-center gap-2 bg-purple/10 border border-purple/30 rounded-pill px-4 py-1.5 w-fit mb-6"
-          >
-            <motion.span 
-              className="w-2 h-2 rounded-full bg-purple-light"
-              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.4, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-            <span className="font-mono text-[11px] text-purple-light uppercase tracking-widest">
-              ✦ Available for Internships
-            </span>
-          </motion.div>
+          {/* Label */}
+          <span className="block font-mono text-[10px] text-accent uppercase tracking-[0.2em] mb-6">
+            Full-Stack Developer &amp; GenAI Engineer
+          </span>
 
-          {/* Main Heading */}
-          <motion.h1 
-            variants={fadeUp} 
-            custom={1}
-            className="font-syne font-black leading-[1.0] tracking-[-3px] mb-4"
+          {/* Name */}
+          <motion.h1
+            variants={fadeUp}
+            custom={0}
+            className="font-display font-semibold text-5xl lg:text-6xl text-text-primary tracking-tight leading-[1.1] mb-4"
           >
-            <span className="block text-white text-[4rem] lg:text-[6rem]">Shrijan</span>
-            <span className="block bg-gradient-to-r from-purple via-cyan to-pink bg-clip-text text-transparent text-[4rem] lg:text-[6rem]">
-              Sanidhya
-            </span>
+            Shrijan
+            <br />
+            Sanidhya
           </motion.h1>
 
-          {/* Typewriter Line */}
-          <motion.div variants={fadeUp} custom={2} className="mb-5 h-8 flex items-center">
-            <span className="font-mono text-cyan text-lg lg:text-xl">
-              {displayText}
-              <motion.span 
-                animate={{ opacity: [1, 0, 1] }} 
-                transition={{ duration: 0.8, repeat: Infinity }}
-                className="text-cyan ml-0.5"
-              >
-                |
-              </motion.span>
-            </span>
+          {/* Typewriter */}
+          <motion.div
+            variants={fadeUp}
+            custom={1}
+            className="font-mono text-sm text-text-secondary mb-6 h-[24px]"
+          >
+            <span className="text-accent">→ </span>
+            {currentTitle}
+            <span className="inline-block w-[1px] h-[14px] bg-text-secondary ml-0.5 align-middle animate-pulse" />
           </motion.div>
 
           {/* Description */}
-          <motion.p 
-            variants={fadeUp} 
-            custom={3}
-            className="max-w-[480px] text-white/60 font-dm leading-[1.8] text-[0.93rem] mb-8"
+          <motion.p
+            variants={fadeUp}
+            custom={2}
+            className="max-w-md text-text-secondary font-sans text-sm leading-[1.8] mb-8"
           >
-            I build intelligent web applications that go beyond the screen. 
-            My work lives at the intersection of high-end frontend and GenAI innovation — 
-            turning complex ideas into sleek, AI-enhanced digital experiences.
+            {description}
           </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div 
-            variants={fadeUp} 
-            custom={4}
-            className="flex gap-4 flex-wrap"
+          {/* Buttons */}
+          <motion.div
+            variants={fadeUp}
+            custom={3}
+            className="flex gap-3"
           >
             <motion.a
               href="#projects"
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400 }}
-              style={{ boxShadow: "0 0 0 rgba(124,58,237,0)" }}
-              onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 16px 40px rgba(124,58,237,0.45)"}
-              onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 0 rgba(124,58,237,0)"}
-              className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple to-purple-dark text-white font-dm font-semibold text-sm px-7 py-3.5 rounded-xl transition-shadow duration-300"
+              whileHover={{ y: -1, boxShadow: "0 4px 14px rgba(59,130,246,0.25)" }}
+              transition={{ duration: 0.2 }}
+              className="bg-accent hover:bg-blue-500 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors duration-200 cursor-hover"
             >
-              View My Work <ArrowDownRight size={18} />
+              View Work
             </motion.a>
             <motion.a
-              href={portfolioData.contact.socials.find(s => s.name === "GitHub")?.url}
+              href={portfolioData.contact?.socials?.find(s => s.name.toLowerCase() === 'github')?.url || '#'}
               target="_blank"
               rel="noreferrer"
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400 }}
-              className="inline-flex items-center justify-center gap-2 border border-cyan/30 text-cyan bg-transparent hover:bg-cyan/10 hover:border-cyan text-sm font-dm font-semibold px-7 py-3.5 rounded-xl transition-colors duration-300"
+              whileHover={{ y: -1 }}
+              transition={{ duration: 0.2 }}
+              className="border border-border hover:border-border-hover text-text-secondary hover:text-text-primary text-sm px-5 py-2.5 rounded-lg transition-colors duration-200 cursor-hover"
             >
-              GitHub <ExternalLink size={18} />
+              GitHub
             </motion.a>
           </motion.div>
         </motion.div>
 
-        {/* Right Column - 45% on lg */}
-        <motion.div 
-          className="w-full lg:w-[45%] flex flex-col items-center justify-center relative mt-12 lg:mt-0"
-          variants={fadeIn}
-          custom={2}
+        {/* RIGHT — Avatar */}
+        <motion.div
+          className="w-full lg:w-1/2 flex flex-col items-center"
+          variants={scaleIn}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* Avatar Container */}
-          <div className="w-[280px] h-[280px] rounded-full relative flex items-center justify-center mb-8">
-            
-            {/* Spinning Ring */}
-            <motion.div 
-              className="absolute inset-0 rounded-full"
-              style={{ background: "conic-gradient(from 0deg, #7c3aed, #06b6d4, #ec4899, #f59e0b, #7c3aed)" }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            />
-            
-            {/* Inner Circle / Image */}
-            <div className="absolute inset-[3px] rounded-full bg-card flex items-center justify-center overflow-hidden z-10">
-              {/* Initials (replace with img when ready) */}
-              <span className="font-syne font-black text-6xl bg-gradient-to-br from-purple to-cyan bg-clip-text text-transparent">
-                SS
-              </span>
-              {/* <img src={photoUrl} className="w-full h-full object-cover rounded-full" alt="Shrijan Sanidhya" /> */}
+          {/* Avatar */}
+          <div className="w-48 h-48 rounded-full border border-[rgba(59,130,246,0.25)] flex items-center justify-center">
+            <div className="w-[calc(100%-12px)] h-[calc(100%-12px)] rounded-full bg-card flex items-center justify-center">
+              <span className="font-display font-semibold text-4xl text-text-primary">SS</span>
             </div>
+          </div>
 
-            {/* Floating Skill Pills */}
-            {floatingPills.map((pill, i) => (
-              <motion.div
-                key={pill.text}
-                className="absolute glass-card rounded-pill px-3 py-1.5 font-mono text-xs text-white/70 whitespace-nowrap z-20"
-                style={{ top: pill.top, bottom: pill.bottom, left: pill.left, right: pill.right }}
-                animate={{ y: [-8, 8, -8] }}
-                transition={{ duration: pill.duration, repeat: Infinity, ease: "easeInOut", delay: pill.delay }}
-              >
-                {pill.text}
-              </motion.div>
-            ))}
+          {/* Info below avatar */}
+          <span className="font-sans font-medium text-sm text-text-primary mt-4">
+            Shrijan Sanidhya
+          </span>
+          <span className="font-mono text-[10px] text-text-tertiary mt-1">
+            B.Tech AI · NST Rishihood
+          </span>
+
+          {/* Status pill */}
+          <div className="border border-border rounded-full px-3 py-1 mt-3 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
+            <span className="font-mono text-[10px] text-text-secondary">
+              Open to opportunities
+            </span>
           </div>
         </motion.div>
 
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div 
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase">scroll</span>
-        <ChevronDown size={16} className="text-white/30" />
-      </motion.div>
+      {/* Scroll Hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <span className="font-mono text-[10px] text-text-tertiary opacity-50">
+          scroll ↓
+        </span>
+      </div>
     </section>
   );
 }
