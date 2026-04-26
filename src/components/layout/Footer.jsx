@@ -1,23 +1,12 @@
 export function Footer() {
   return (
-    <footer className="border-t border-border py-6 px-6 w-full mt-24">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
-        
-        <a
-          href="#"
-          className="font-display font-semibold text-xl text-text-primary hover:scale-105 transition-transform"
-        >
-          SS
-        </a>
-
-        <div className="font-mono text-[11px] text-text-tertiary text-center">
+    <footer className="border-t border-border py-8 mt-12">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a href="#" className="font-bold text-lg text-gradient bg-gradient-accent">SS</a>
+        <span className="font-mono text-[10px] text-text-tertiary text-center">
           Built with passion by Shrijan Sanidhya © 2026
-        </div>
-
-        <div className="font-mono text-[11px] text-text-tertiary text-center">
-          Made in India 🇮🇳
-        </div>
-
+        </span>
+        <span className="font-mono text-[10px] text-text-tertiary">Made in India 🇮🇳</span>
       </div>
     </footer>
   );

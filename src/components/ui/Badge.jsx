@@ -5,7 +5,7 @@ export function Badge({ children, className, ...props }) {
   return (
     <motion.div
       className={cn(
-        "inline-flex items-center gap-2 px-4 py-2 rounded-pill glass-card border-purple/30 shadow-[0_0_10px_rgba(124,58,237,0.1)] text-sm",
+        "inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-border bg-surface font-mono text-[11px] text-text-secondary",
         className
       )}
       {...props}
